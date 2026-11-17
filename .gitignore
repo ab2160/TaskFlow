@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### Local Config ###
-application-local.properties
+application.properties
 
 logs/
 *.log	
