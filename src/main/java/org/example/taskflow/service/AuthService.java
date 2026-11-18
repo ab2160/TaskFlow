@@ -7,6 +7,8 @@ import org.example.taskflow.dto.LoginRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
     private final UserRepository repo;
@@ -19,31 +21,26 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String register(RegisterRequest request){
+    public Optional<User> register(RegisterRequest request){
         User existing = repo.findByEmail(request.getEmail());
         if (existing != null){
-            return "Email already exists";
+            return Optional.empty();
         }
-
         User user = new User();
-
-        user.setFullName(request.getFullName());
+        user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-
-        repo.save(user);
-
-        return "Registration successful";
+        return Optional.of(repo.save(user));
     }
 
-    public String login(LoginRequest request){
+    public Optional<User> login(LoginRequest request){
         User user = repo.findByEmail(request.getEmail());
-        if (user == null){
-            return "User not found";
+        if(user == null){
+            return Optional.empty();
         }
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
-            return "Invalid password";
+            return Optional.empty();
         }
-        return "Login successful";
+        return Optional.of(user);
     }
 }

@@ -1,15 +1,15 @@
 package org.example.taskflow.dto;
 
 public class RegisterRequest {
-    private String fullName;
+    private String name;
     private String email;
     private String password;
 
     public RegisterRequest() {
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setEmail(String email) {
@@ -20,10 +20,9 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
-
     public String getEmail() {
         return email;
     }

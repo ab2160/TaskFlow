@@ -8,7 +8,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String fullName;
+    private String name;
 
     @Column(unique = true)
     private String email;
@@ -19,8 +19,8 @@ public class User {
         this.id = id;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setEmail(String email) {
@@ -35,8 +35,8 @@ public class User {
         return id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
     public String getEmail() {
@@ -48,12 +48,5 @@ public class User {
     }
 
     public User() {
-    }
-
-    public User(long id, String fullName, String email, String password) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
     }
 }
