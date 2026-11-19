@@ -1,5 +1,6 @@
 package org.example.taskflow.controller;
 
+import org.example.taskflow.dto.AuthResponse;
 import org.example.taskflow.dto.RegisterRequest;
 import org.example.taskflow.dto.LoginRequest;
 import org.example.taskflow.entity.User;
@@ -31,11 +32,11 @@ public class AuthController {
     }
 
    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request){
-        Optional<User> user = authService.login(request);
-        if(user.isPresent()){
-            return ResponseEntity.ok("Login successful");
+    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+        Optional<String> token = authService.login(request);
+        if (token.isPresent()){
+            return ResponseEntity.ok(new AuthResponse(token.get()));
         }
-        return ResponseEntity.badRequest().body("Invalid email or password");
+        return ResponseEntity.status(401).body("Invalid email or password");
    }
 }
