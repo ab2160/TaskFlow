@@ -6,10 +6,8 @@ import java.time.LocalDateTime;
 public class ProjectRequest {
     private String name;
     private String description;
-    private Long ownerId;
     private String status;
     private LocalDate deadline;
-    private LocalDateTime createdAt;
 
 
     public ProjectRequest() {
@@ -21,10 +19,6 @@ public class ProjectRequest {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
     }
 
     public String getStatus() {
@@ -51,15 +45,4 @@ public class ProjectRequest {
         return description;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }

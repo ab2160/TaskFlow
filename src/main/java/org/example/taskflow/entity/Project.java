@@ -13,7 +13,7 @@ public class Project {
     private String name;
     private String description;
     private String status;
-    private LocalDate deadline;
+    private LocalDate deadline; //To be fixed
     private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "owner_id")
@@ -76,9 +76,5 @@ public class Project {
 
     public User getOwner() {
         return owner;
-    }
-    @PrePersist
-    public void prePersist(){
-        createdAt = LocalDateTime.now();
     }
 }

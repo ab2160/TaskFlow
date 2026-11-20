@@ -17,8 +17,8 @@ public class ProjectController {
         this.service = service;
     }
     @PostMapping
-    public ResponseEntity<String> createProject(@RequestBody ProjectRequest request){
-        return ResponseEntity.ok(service.createProject(request));
+    public ResponseEntity<Project> createProject(@RequestBody ProjectRequest request){
+        return ResponseEntity.status(201).body(service.createProject(request));
     }
     @GetMapping
     public List<Project> getAllProjects(){
