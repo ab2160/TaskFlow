@@ -13,7 +13,7 @@ public class Project {
     private String name;
     private String description;
     private String status;
-    private LocalDate deadline; //To be fixed
+    private LocalDateTime deadline;
     private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "owner_id")
@@ -38,7 +38,7 @@ public class Project {
         this.status = status;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
     }
 
@@ -66,7 +66,7 @@ public class Project {
         return status;
     }
 
-    public LocalDate getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 

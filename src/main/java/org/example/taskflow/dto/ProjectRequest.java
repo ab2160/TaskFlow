@@ -7,7 +7,7 @@ public class ProjectRequest {
     private String name;
     private String description;
     private String status;
-    private LocalDate deadline;
+    private LocalDateTime deadline;
 
 
     public ProjectRequest() {
@@ -29,11 +29,11 @@ public class ProjectRequest {
         this.status = status;
     }
 
-    public LocalDate getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
     }
 
