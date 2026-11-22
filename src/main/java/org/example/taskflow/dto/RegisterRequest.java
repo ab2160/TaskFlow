@@ -2,6 +2,7 @@ package org.example.taskflow.dto;
 
 public class RegisterRequest {
     private String name;
+    private String username;
     private String email;
     private String password;
 
@@ -29,5 +30,13 @@ public class RegisterRequest {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

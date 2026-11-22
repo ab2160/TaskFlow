@@ -43,6 +43,9 @@ public class ProjectService {
         project.setOwner(currentUser);
         project.setStatus(request.getStatus());
         project.setDeadline(request.getDeadline());
+        if(request.getDeadline() != null && request.getDeadline().isBefore(LocalDateTime.now())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dead line cannot be in the past");
+        }
         project.setCreatedAt(LocalDateTime.now());
 
         return repository.save(project);

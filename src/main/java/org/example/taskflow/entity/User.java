@@ -2,6 +2,8 @@ package org.example.taskflow.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -14,8 +16,15 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
+    private String username;
+
     @JsonIgnore
     private String password;
+
+    @OneToMany(mappedBy = "assignedUser")
+    @JsonIgnore
+    private List<Task> assignedTasks;
 
     public void setId(long id) {
         this.id = id;
@@ -47,6 +56,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public User() {

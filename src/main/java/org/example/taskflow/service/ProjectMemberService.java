@@ -35,7 +35,7 @@ public class ProjectMemberService {
         if (!project.getOwner().getId().equals(currentUser.getId())){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only owner can add members");
         }
-        User member = userRepository.findById(request.getUserId())
+        User member = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         if (projectMemberRepository.existsByProjectAndUser(project, member)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already a member");

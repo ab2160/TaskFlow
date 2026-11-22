@@ -1,12 +1,14 @@
 package org.example.taskflow.dto;
 
+import org.example.taskflow.enums.ProjectStatus;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ProjectRequest {
     private String name;
     private String description;
-    private String status;
+    private ProjectStatus status;
     private LocalDateTime deadline;
 
 
@@ -21,11 +23,11 @@ public class ProjectRequest {
         this.description = description;
     }
 
-    public String getStatus() {
+    public ProjectStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ProjectStatus status) {
         this.status = status;
     }
 

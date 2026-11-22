@@ -1,6 +1,8 @@
 package org.example.taskflow.entity;
 
 import jakarta.persistence.*;
+import org.example.taskflow.enums.ProjectStatus;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -12,7 +14,8 @@ public class Project {
 
     private String name;
     private String description;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus status;
     private LocalDateTime deadline;
     private LocalDateTime createdAt;
     @ManyToOne
@@ -32,10 +35,6 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public void setDeadline(LocalDateTime deadline) {
@@ -62,8 +61,12 @@ public class Project {
         return name;
     }
 
-    public String getStatus() {
+    public ProjectStatus getStatus() {
         return status;
+    }
+
+    public void setStatus(ProjectStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getDeadline() {
