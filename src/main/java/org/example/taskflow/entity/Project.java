@@ -1,10 +1,12 @@
 package org.example.taskflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.example.taskflow.enums.ProjectStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Project {
@@ -21,6 +23,10 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
+
+    @OneToMany(mappedBy = "project")
+    @JsonIgnore
+    private List<Resource> resources;
 
     public Project() {
     }

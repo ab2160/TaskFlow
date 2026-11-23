@@ -26,6 +26,10 @@ public class User {
     @JsonIgnore
     private List<Task> assignedTasks;
 
+    @OneToMany(mappedBy = "uploadedBy")
+    @JsonIgnore
+    private List<Resource> uploadedResources;
+
     public void setId(long id) {
         this.id = id;
     }

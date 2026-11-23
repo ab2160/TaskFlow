@@ -169,8 +169,9 @@ public class TaskService {
         User currentUser = getCurrentUser();
 
         boolean isOwner = task.getProject().getOwner().getId().equals(currentUser.getId());
-        if (!isOwner){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only owner can delete task");
+        boolean isCreator = task.getCreatedBy() != null && task.getCreatedBy().getId().equals(currentUser.getId());
+        if (!isOwner && !isCreator){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot delete task");
         }
         taskRepository.delete(task);
     }
