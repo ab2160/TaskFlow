@@ -1,15 +1,20 @@
 package org.example.taskflow.dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import org.example.taskflow.enums.TaskPriority;
 import org.example.taskflow.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 
 public class TaskRequest {
+    @NotBlank(message = "Task title is required")
     private String title;
     private String description;
     private TaskStatus status;
     private TaskPriority priority;
+
+    @Future(message = "Due date must be in the future")
     private LocalDateTime dueDate;
     private String assignedUsername;
 

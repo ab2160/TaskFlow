@@ -1,22 +1,27 @@
 package org.example.taskflow.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class LoginRequest {
-    private String email;
+    @NotBlank(message = "Username or Email is required")
+    private String identifier;
+
+    @NotBlank(message = "Password is required")
     private String password;
 
     public LoginRequest() {
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getPassword() {

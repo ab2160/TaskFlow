@@ -1,5 +1,6 @@
 package org.example.taskflow.controller;
 
+import jakarta.validation.Valid;
 import org.example.taskflow.dto.TaskStepRequest;
 import org.example.taskflow.entity.TaskStep;
 import org.example.taskflow.service.TaskStepService;
@@ -18,7 +19,7 @@ public class TaskStepController {
     }
 
     @PostMapping("/tasks/{taskId}/steps")
-    public ResponseEntity<TaskStep> addStep(@PathVariable Long taskId, @RequestBody TaskStepRequest request){
+    public ResponseEntity<TaskStep> addStep(@Valid @PathVariable Long taskId, @RequestBody TaskStepRequest request){
         return ResponseEntity.ok(service.addStep(taskId, request));
     }
 

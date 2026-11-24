@@ -1,5 +1,6 @@
 package org.example.taskflow.controller;
 
+import jakarta.validation.Valid;
 import org.example.taskflow.dto.InvitationRequest;
 import org.example.taskflow.dto.InvitationResponse;
 import org.example.taskflow.entity.Invitation;
@@ -19,7 +20,7 @@ public class InvitationController {
     }
 
     @PostMapping("/projects/{projectId}/invitations")
-    public ResponseEntity<Invitation> sendInvitation(@PathVariable Long projectId, @RequestBody InvitationRequest request){
+    public ResponseEntity<Invitation> sendInvitation(@Valid @PathVariable Long projectId, @RequestBody InvitationRequest request){
         return ResponseEntity.ok(invitationService.sendInvitation(projectId, request));
     }
 

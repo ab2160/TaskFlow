@@ -1,6 +1,9 @@
 package org.example.taskflow.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class InvitationRequest {
+    @NotBlank(message = "Username is required")
     private String username;
 
     public String getUsername() {

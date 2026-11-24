@@ -5,8 +5,10 @@ import org.example.taskflow.repository.UserRepository;
 import org.example.taskflow.dto.RegisterRequest;
 import org.example.taskflow.dto.LoginRequest;
 import org.example.taskflow.security.JwtService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -37,12 +39,13 @@ public class AuthService {
     }
 
     public Optional<String> login(LoginRequest request){
-        User user = repo.findByEmail(request.getEmail());
+        User user = repo.findByEmail(request.getIdentifier());
         if(user == null){
-            return Optional.empty();
+            user = repo.findByUsername(request.getIdentifier())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
         }
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
-            return Optional.empty();
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
         return Optional.of(jwtService.generateToken(user.getEmail()));
     }

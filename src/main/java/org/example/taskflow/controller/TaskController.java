@@ -1,5 +1,6 @@
 package org.example.taskflow.controller;
 
+import jakarta.validation.Valid;
 import org.example.taskflow.dto.TaskRequest;
 import org.example.taskflow.entity.Task;
 import org.example.taskflow.service.TaskService;
@@ -17,7 +18,7 @@ public class TaskController {
         this.service = service;
     }
     @PostMapping
-    public ResponseEntity<Task> createTask(@PathVariable Long projectId, @RequestBody TaskRequest request){
+    public ResponseEntity<Task> createTask(@Valid @PathVariable Long projectId, @RequestBody TaskRequest request){
         return ResponseEntity.ok(service.createTask(projectId, request));
     }
     @GetMapping

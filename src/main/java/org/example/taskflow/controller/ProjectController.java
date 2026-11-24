@@ -1,5 +1,6 @@
 package org.example.taskflow.controller;
 
+import jakarta.validation.Valid;
 import org.example.taskflow.entity.Project;
 import org.example.taskflow.service.ProjectService;
 import org.example.taskflow.dto.ProjectRequest;
@@ -17,7 +18,7 @@ public class ProjectController {
         this.service = service;
     }
     @PostMapping
-    public ResponseEntity<Project> createProject(@RequestBody ProjectRequest request){
+    public ResponseEntity<Project> createProject(@Valid @RequestBody ProjectRequest request){
         return ResponseEntity.status(201).body(service.createProject(request));
     }
     @GetMapping

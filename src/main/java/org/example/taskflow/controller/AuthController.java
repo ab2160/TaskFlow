@@ -1,5 +1,6 @@
 package org.example.taskflow.controller;
 
+import jakarta.validation.Valid;
 import org.example.taskflow.dto.AuthResponse;
 import org.example.taskflow.dto.RegisterRequest;
 import org.example.taskflow.dto.LoginRequest;
@@ -23,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request){
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request){
         Optional<User> user = authService.register(request);
         if(user.isPresent()){
             return ResponseEntity.status(201).body("Registration successful");
@@ -32,7 +33,7 @@ public class AuthController {
     }
 
    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request){
         Optional<String> token = authService.login(request);
         if (token.isPresent()){
             return ResponseEntity.ok(new AuthResponse(token.get()));
