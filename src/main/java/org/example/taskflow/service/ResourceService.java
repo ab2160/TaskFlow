@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.core.io.UrlResource;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -101,7 +102,7 @@ public class ResourceService {
         return resourceRepository.findByProject(project);
     }
 
-    public Resource getResourceByID(Long id){
+    public Resource getResourceById(Long id){
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found"));
         User currentUser = getCurrentUser();
@@ -127,5 +128,24 @@ public class ResourceService {
 
         Files.deleteIfExists(Paths.get(resource.getFilePath()));
         resourceRepository.delete(resource);
+    }
+
+    public org.springframework.core.io.Resource downloadResource(Long id) throws IOException{
+        Resource resource = resourceRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found"));
+        User currentUser = getCurrentUser();
+        Project project = resource.getProject();
+
+        boolean isOwner = project.getOwner().getId().equals(currentUser.getId());
+        boolean isMember = projectMemberRepository.existsByProjectAndUser(project, currentUser);
+        if (!isOwner && !isMember){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not a member of this project");
+        }
+        Path path = Paths.get(resource.getFilePath());
+        org.springframework.core.io.Resource file = new UrlResource(path.toUri());
+        if (!file.exists()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found");
+        }
+        return file;
     }
 }

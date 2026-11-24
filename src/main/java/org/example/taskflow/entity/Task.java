@@ -1,10 +1,12 @@
 package org.example.taskflow.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.example.taskflow.enums.TaskPriority;
 import org.example.taskflow.enums.TaskStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tasks")
@@ -32,6 +34,10 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "created_by")
     private User createdBy;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<TaskStep> steps;
 
     public Long getId() {
         return id;
