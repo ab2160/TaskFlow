@@ -11,6 +11,7 @@ import org.example.taskflow.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -72,6 +73,7 @@ public class InvitationService {
         return invitationRepository.findByInviteeEmail(currentUser.getEmail());
     }
 
+    @Transactional
     public InvitationResponse acceptInvitation(String token){
         Invitation invitation = invitationRepository.findByToken(token)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invitation not found"));

@@ -18,11 +18,6 @@ public class ProjectMemberController {
         this.service = service;
     }
 
-    @PostMapping("/{projectId}/members")
-    public ResponseEntity<ProjectMember> addMember(@PathVariable Long projectId, @RequestBody AddProjectMemberRequest request){
-        return ResponseEntity.ok(service.addMember(projectId, request));
-    }
-
     @GetMapping("/{projectId}/members")
     public ResponseEntity<List<ProjectMemberResponse>> getMembers(@PathVariable Long projectId){
         return ResponseEntity.ok(service.getMembers(projectId));

@@ -27,27 +27,6 @@ public class ProjectMemberService {
         this.userRepository = userRepository;
         this.projectMemberRepository = projectMemberRepository;
     }
-    public ProjectMember addMember(Long projectId, AddProjectMemberRequest request){
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userRepository.findByEmail(email);
-        if (!project.getOwner().getId().equals(currentUser.getId())){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only owner can add members");
-        }
-        User member = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-        if (projectMemberRepository.existsByProjectAndUser(project, member)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already a member");
-        }
-        ProjectMember projectMember = new ProjectMember();
-        projectMember.setId(new ProjectMemberId(project.getId(), member.getId()));
-        projectMember.setProject(project);
-        projectMember.setUser(member);
-        projectMember.setRole("MEMBER");
-
-        return projectMemberRepository.save(projectMember);
-    }
 
     public List<ProjectMemberResponse> getMembers (Long projectId){
         Project project = projectRepository.findById(projectId)

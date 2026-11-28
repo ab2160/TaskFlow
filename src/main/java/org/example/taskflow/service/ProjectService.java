@@ -1,6 +1,7 @@
 package org.example.taskflow.service;
 
 import org.example.taskflow.entity.Project;
+import org.example.taskflow.entity.ProjectMember;
 import org.example.taskflow.entity.User;
 import org.example.taskflow.repository.ProjectMemberRepository;
 import org.example.taskflow.repository.ProjectRepository;
@@ -12,8 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProjectService {
@@ -25,6 +25,11 @@ public class ProjectService {
         this.userRepository = userRepository;
         this.repository = repository;
         this.projectMemberRepository = projectMemberRepository;
+    }
+
+    private User getCurrentUser(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(email);
     }
 
     public Project createProject(ProjectRequest request) {
@@ -51,9 +56,17 @@ public class ProjectService {
         return repository.save(project);
     }
 
-    public List<Project> getAllProjects() {
-        return repository.findAll();
+    public List<Project> getMyProjects(){
+        User currentUser = getCurrentUser();
+        Set<Project> projects = new HashSet<>(repository.findByOwner(currentUser));
+        List<ProjectMember> memberships = projectMemberRepository.findByUser(currentUser);
+
+        for (ProjectMember membership : memberships){
+            projects.add(membership.getProject());
+        }
+        return new ArrayList<>(projects);
     }
+
 
     public Optional<Project> getProjectById(Long id) {
         Project project = repository.findById(id)
